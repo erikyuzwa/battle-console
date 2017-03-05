@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Console = SadConsole.Consoles.Console;
 using BattleConsole.worlds;
 

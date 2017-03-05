@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using SadConsole.Game;
 using SadConsole;
 using BattleConsole.modals;
+using BattleConsole.worlds;
 
 namespace BattleConsole.screens
 {
@@ -217,8 +218,8 @@ namespace BattleConsole.screens
 
                     popup.okButton.Click += (btn, args) =>
                     {
-                        System.Console.WriteLine("close modal");
                         popup.Hide();
+                        GameWorld.SetActiveConsole(States.TITLE);
                     };
 
                     popup.Show(true);
@@ -237,51 +238,21 @@ namespace BattleConsole.screens
 
             if (info.KeysPressed.Contains(AsciiKey.Get(Keys.Escape)))
             {
-                //System.Console.WriteLine("escape hit");
                 var popup = new GameQuitModal(30, 7);
                 popup.Center();
                 popup.okButton.Click += (btn, args) =>
                 {
-                    //System.Console.WriteLine("quit game");
                     popup.Hide();
-                    System.Environment.Exit(0);
+                    GameWorld.SetActiveConsole(States.TITLE);
                 };
 
                 popup.cancelButton.Click += (btn, args) =>
                 {
-                   // System.Console.WriteLine("cancel quit");
                     popup.Hide();
                 };
 
                 popup.Show(true);
             }
-
-            /*
-            if (info.KeysPressed.Contains(AsciiKey.Get(Keys.Up)))
-            {
-                newPosition.Y -= 1;
-                keyHit = true;
-            }
-            else if (info.KeysPressed.Contains(AsciiKey.Get(Keys.Down)))
-            {
-                newPosition.Y += 1;
-                keyHit = true;
-            }
-
-            if (info.KeysPressed.Contains(AsciiKey.Get(Keys.Left)))
-            {
-                newPosition.X -= 1;
-                keyHit = true;
-            }
-            else if (info.KeysPressed.Contains(AsciiKey.Get(Keys.Right)))
-            {
-                newPosition.X += 1;
-                keyHit = true;
-            }
-
-            player1Console.VirtualCursor.Position = newPosition;
-            */
-  
 
             return keyHit || base.ProcessKeyboard(info);
         }

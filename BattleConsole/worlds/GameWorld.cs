@@ -1,9 +1,4 @@
 ﻿using BattleConsole.screens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BattleConsole.worlds
 {
@@ -31,11 +26,13 @@ namespace BattleConsole.worlds
 
         }
         
+        // A high level state switcher to run the appropriate Console depending upon state
         public static void SetActiveConsole(States type)
         {
             switch(type)
             {
                 case States.TITLE:
+                case States.QUIT:
                     SadConsole.Engine.ConsoleRenderStack.Clear();
                     SadConsole.Engine.ConsoleRenderStack.Add(titleScreen);
                     titleScreen.Begin();
@@ -44,8 +41,6 @@ namespace BattleConsole.worlds
                     SadConsole.Engine.ConsoleRenderStack.Clear();
                     SadConsole.Engine.ConsoleRenderStack.Add(playScreen);
                     playScreen.Begin();
-                    break;
-                case States.QUIT:
                     break;
                 default:
                     break;

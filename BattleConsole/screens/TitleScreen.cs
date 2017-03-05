@@ -15,11 +15,6 @@ namespace BattleConsole.screens
 {
     class TitleScreen : ConsoleList
     {
-        //public Console ViewConsole;
-        // public CharacterStatusPanel StatsConsole;
-        // public MessagesConsole MessageConsole;
-
-        //private Console messageHeaderConsole;
         public TitleConsole titleConsole;
 
         public TitleScreen()
@@ -27,17 +22,14 @@ namespace BattleConsole.screens
 
             titleConsole = new consoles.TitleConsole(80, 25);
 
-            // Keyboard setup
-            
-
-            SadConsole.Engine.ActiveConsole = this;
-
             Add(titleConsole);
            
         }
 
         public void Begin()
         {
+            SadConsole.Engine.ActiveConsole = this;
+
             titleConsole.Clear();
 
             titleConsole.Print(30, 6, "  BattleConsole  ");
