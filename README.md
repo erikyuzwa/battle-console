@@ -1,6 +1,8 @@
 # battle-console
 a small demo ship game using C#. Click around and try to sink the enemy's single boat, before they destroy yours.
 
+![battle console in progress](/screenshot.png?raw=true "Battle-Console")
+
 # Getting The Code
 
 * `git clone https://github.com/erikyuzwa/battle-console.git`
