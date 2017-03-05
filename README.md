@@ -24,7 +24,7 @@ for any updates.
 
 # Dependencies
 
-*The Solution files were generated using Visual Studio 2015 Community Edition, so hopefully you won't have issues if using a newer (or older) version of the IDE.
+* The Solution files were generated using Visual Studio 2015 Community Edition, so hopefully you won't have issues if using a newer (or older) version of the IDE.
 * [SadConsole.Core v5.2.3](https://www.nuget.org/packages/SadConsole.Core/)
 * [SadConsole.Controls v4.0.1](https://www.nuget.org/packages/SadConsole.Controls/)
 * [SadConsole.GameHelpers v4.5.0](https://www.nuget.org/packages/SadConsole.GameHelpers/)
