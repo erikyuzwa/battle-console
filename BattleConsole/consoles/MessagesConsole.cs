@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SadConsole;
-using Microsoft.Xna.Framework;
 
 namespace BattleConsole.consoles
 {
     class MessagesConsole : SadConsole.Consoles.Console
-
     {
 
         public MessagesConsole(int width, int height) : base(width, height)

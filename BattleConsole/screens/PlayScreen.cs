@@ -89,16 +89,7 @@ namespace BattleConsole.screens
             Add(messageConsole);
             Add(messageHeaderConsole);
 
-
             this.CanUseMouse = true;
-           // this.CanUseKeyboard = true;
-
-            //this.isActive = true;
-            //this.Draw();
-
-            // flip control based on who's turn
-            //player1Console.VirtualCursor.IsVisible = true;
-            //player2Console.VirtualCursor.IsVisible = false;
 
             AnimatedTextSurface mouseAnimation = new AnimatedTextSurface("default", 1, 1, Engine.DefaultFont);
             mouseAnimation.CreateFrame();
@@ -109,7 +100,6 @@ namespace BattleConsole.screens
             this.mouseCursor = new GameObject();
             this.mouseCursor.Animation = mouseAnimation;
 
-   
 
         }
 
@@ -268,7 +258,6 @@ namespace BattleConsole.screens
 
             mouseCursor.Render();
         }
-
 
     }
 }
