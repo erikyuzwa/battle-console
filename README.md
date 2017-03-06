@@ -31,6 +31,10 @@ for any updates.
 * [SadConsole.Controls v4.0.1](https://www.nuget.org/packages/SadConsole.Controls/)
 * [SadConsole.GameHelpers v4.5.0](https://www.nuget.org/packages/SadConsole.GameHelpers/)
 
+# TODO's
+
+I've generated a small list of `TODO` items that are [here](TODO.md)
+
 # LICENSE 
 
 MIT License
