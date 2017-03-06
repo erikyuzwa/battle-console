@@ -219,6 +219,7 @@ namespace BattleConsole.screens
                 // if our game-over condition is set then display our modal dialog
                 if (this.isGameOver)
                 {
+                    SadConsole.Engine.MonoGameInstance.IsMouseVisible = true;
                     var popup = new GameOverModal(35, 7, this.isPlayer1Winner);
                     popup.Center();
 
@@ -259,6 +260,8 @@ namespace BattleConsole.screens
 
             if (info.KeysPressed.Contains(AsciiKey.Get(Keys.Escape)))
             {
+                SadConsole.Engine.MonoGameInstance.IsMouseVisible = true;
+
                 var popup = new GameQuitModal(30, 7);
                 popup.Center();
                 popup.okButton.Click += (btn, args) =>
@@ -269,6 +272,7 @@ namespace BattleConsole.screens
 
                 popup.cancelButton.Click += (btn, args) =>
                 {
+                    SadConsole.Engine.MonoGameInstance.IsMouseVisible = false;
                     popup.Hide();
                 };
 

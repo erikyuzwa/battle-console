@@ -27,8 +27,11 @@ namespace BattleConsole
         private static void Engine_EngineStart(object sender, EventArgs e)
         {
 
-            // TODO set our title bar...somehow?
-            ///SadConsole.Engine.??
+            // update our title bar
+            SadConsole.Engine.MonoGameInstance.Window.Title = "BattleConsole v" + Constants.APP_VERSION;
+
+            // initially hide the system mouse cursor
+            SadConsole.Engine.MonoGameInstance.IsMouseVisible = false;
 
             // Clear the default console
             SadConsole.Engine.ConsoleRenderStack.Clear();

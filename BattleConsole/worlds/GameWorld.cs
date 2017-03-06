@@ -33,6 +33,7 @@ namespace BattleConsole.worlds
             {
                 case States.TITLE:
                 case States.QUIT:
+                    SadConsole.Engine.MonoGameInstance.IsMouseVisible = false;
                     SadConsole.Engine.ConsoleRenderStack.Clear();
                     SadConsole.Engine.ConsoleRenderStack.Add(titleScreen);
                     titleScreen.Begin();

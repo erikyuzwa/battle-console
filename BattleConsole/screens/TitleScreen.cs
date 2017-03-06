@@ -30,7 +30,7 @@ namespace BattleConsole.screens
             titleConsole.Clear();
 
             // display a primitive title screen and main menu
-            titleConsole.Print(26, 6, "  BattleConsole  v" + Constants.APP_VERSION);
+            titleConsole.Print(30, 6, "  BattleConsole");
             titleConsole.Print(30, 7, " -=-=-=-=-=-=-= ");
             titleConsole.Print(30, 8, " [1] 1 vs. 1 ");
             titleConsole.Print(30, 9, " [2] 1 vs. 2 ");
@@ -52,6 +52,8 @@ namespace BattleConsole.screens
                 (info.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape)))
             {
 
+                // enable our system mouse
+                SadConsole.Engine.MonoGameInstance.IsMouseVisible = true;
                 var popup = new GameQuitModal(30, 7);
                 popup.Center();
                 popup.okButton.Click += (btn, args) =>
@@ -63,6 +65,7 @@ namespace BattleConsole.screens
                 popup.cancelButton.Click += (btn, args) =>
                 {
                     popup.Hide();
+                    SadConsole.Engine.MonoGameInstance.IsMouseVisible = false;
                 };
 
                 popup.Show(true);
