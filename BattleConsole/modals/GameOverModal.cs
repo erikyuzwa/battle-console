@@ -1,9 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BattleConsole.modals
 {
@@ -12,8 +7,15 @@ namespace BattleConsole.modals
 
         public SadConsole.Controls.Button okButton;
 
-        public GameOverModal(int w, int h) : base(w, h)
+        public GameOverModal(int w, int h, bool isPlayer1Winner) : base(w, h)
         {
+            if (isPlayer1Winner)
+            {
+                this.Title = "YOU WIN!";
+            } else {
+                this.Title = "YOU LOSE!";
+            }
+
             var label1 = new SadConsole.Controls.DrawingSurface(30, 1);
             label1.Position = new Point(2, 2);
             label1.Print(0, 0, "The Fleet Has Been Sunk!");

@@ -105,14 +105,19 @@ namespace BattleConsole.screens
 
         public void Begin()
         {
+            // enable this console to receive input events
             SadConsole.Engine.ActiveConsole = this;
 
+            // spawn the entities in our respective boards
             player1Console.SpawnEntities();
             player2Console.SpawnEntities();
 
+            // clear our messages -- player 1 always goes first
             messageConsole.Clear();
             messageConsole.PrintMessage("player 1's turn");
 
+            // if we only have 1 player, then update the player 2's
+            // panel to read "CPU"
             if (this.numberOfActivePlayers == 1)
             {
                 player2HeaderConsole.Clear();
@@ -122,14 +127,11 @@ namespace BattleConsole.screens
 
             this.isGameOver = false;
             this.isPlayer1Winner = false;
-
-           
         }
 
         // TODO perform any cleanup tasks for this state
         public void End()
-        {
-            
+        {         
         }
 
         public override bool ProcessMouse(MouseInfo info)
@@ -144,12 +146,10 @@ namespace BattleConsole.screens
                 // if we have a valid click then run our collision detection,
                 // update the board and change players
                 var testPos = info.WorldLocation;
-                //System.Console.WriteLine("world location {0}:", testPos);
 
                 // bounds check of mouse in player1 console window
                 if ((5 <= testPos.X && testPos.X <= 28) && (5 <= testPos.Y && testPos.Y <= 16))
                 {
-                    //System.Console.WriteLine("player1 window");
                     if (player1Console.CollisionCheckEntities(testPos))
                     {
                         messageConsole.PrintMessage("Hit!");
@@ -173,7 +173,6 @@ namespace BattleConsole.screens
                 // bounds check of mouse in player2 console window
                 if ((50 <= testPos.X && testPos.X <= 73) && (5 <= testPos.Y && testPos.Y <= 16))
                 {
-                    //System.Console.WriteLine("player2 window");
                     if (player2Console.CollisionCheckEntities(testPos))
                     {
                         messageConsole.PrintMessage("Hit!");
@@ -183,8 +182,7 @@ namespace BattleConsole.screens
                         messageConsole.PrintMessage("Miss!");
                     }
 
-                    // now check if any entities are left standing. We only care
-                    // about
+                    // now check if any entities are left standing. We only care about
                     if (player2Console.AreAllEntitiesDebris())
                     {
                         // game is over!
@@ -194,18 +192,11 @@ namespace BattleConsole.screens
                     }
                 }
 
+                // if our game-over condition is set then display our modal dialog
                 if (this.isGameOver)
                 {
-                    var popup = new GameOverModal(35, 7);
+                    var popup = new GameOverModal(35, 7, this.isPlayer1Winner);
                     popup.Center();
-                    if (this.isPlayer1Winner)
-                    {
-                        popup.Title = "YOU WIN!";
-
-                    } else
-                    {
-                        popup.Title = "YOU LOSE!";
-                    }
 
                     popup.okButton.Click += (btn, args) =>
                     {
@@ -248,11 +239,9 @@ namespace BattleConsole.screens
             return keyHit || base.ProcessKeyboard(info);
         }
 
-        public override void Update()
-        {
-            base.Update();
-        }
-
+        // our mouse cursor isn't added to our console the same way our other
+        // objects are, so we need to override Render() to make sure we
+        // call it
         public override void Render()
         {
             base.Render();

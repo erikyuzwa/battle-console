@@ -55,15 +55,13 @@ namespace BattleConsole.screens
                 var popup = new GameQuitModal(30, 7);
                 popup.Center();
                 popup.okButton.Click += (btn, args) =>
-                {
-                    System.Console.WriteLine("quit game");
+                {                  
                     popup.Hide();
                     System.Environment.Exit(0);
                 };
 
                 popup.cancelButton.Click += (btn, args) =>
                 {
-                    System.Console.WriteLine("cancel quit");
                     popup.Hide();
                 };
 
@@ -73,7 +71,6 @@ namespace BattleConsole.screens
             if (info.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad1))
             {
                 // kick off player vs. cpu
-                System.Console.WriteLine("player vs. cpu");
                 GameWorld.playScreen.numberOfActivePlayers = 1;
                 GameWorld.SetActiveConsole(States.PLAYING);
             }
@@ -81,7 +78,6 @@ namespace BattleConsole.screens
             if (info.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad2))
             {
                 // kick off player vs. player
-                System.Console.WriteLine("player vs. player");
                 GameWorld.playScreen.numberOfActivePlayers = 2;
                 GameWorld.SetActiveConsole(States.PLAYING);
             }
