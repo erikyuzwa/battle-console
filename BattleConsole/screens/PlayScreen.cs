@@ -23,10 +23,10 @@ namespace BattleConsole.screens
         public PlayerFleetConsole player1Console;
         public PlayerFleetConsole player2Console;
         public int numberOfActivePlayers = 1; // either 1 or 2
-        public int currentlyActivePlayer = 1; // either 1 or 3
 
         public bool isGameOver = false;
         public bool isPlayer1Winner = false;
+        public bool isPlayer1Active = false;
 
         private Console messageHeaderConsole;
         private Console player1HeaderConsole;
@@ -37,7 +37,6 @@ namespace BattleConsole.screens
         public PlayScreen()
         {
 
-            
             player1Console = new PlayerFleetConsole(24, 12);
             player1Console.Position = new Point(5, 5);
 
@@ -78,23 +77,24 @@ namespace BattleConsole.screens
             messageHeaderConsole.Fill(Color.White, ColorAnsi.Blue, 196, null);
             messageHeaderConsole.Print(2, 0, " Messages ");
 
-
+            // add our child console(s) to this container
             Add(player1Console);
             Add(player2Console);
             Add(player1HeaderConsole);
             Add(player2HeaderConsole);
-
             Add(messageConsole);
             Add(messageHeaderConsole);
 
+            // creating a mouse cursor that we use as a guide for plotting the
+            // shots is done by enabling the mouse for this parent container,
+            // and creating a GameObject to update as we process the mouse.
+            // Note that we're NOT adding this GameObject to our container
+            // entity list.
             this.CanUseMouse = true;
-
             AnimatedTextSurface mouseAnimation = new AnimatedTextSurface("default", 1, 1, Engine.DefaultFont);
             mouseAnimation.CreateFrame();
             mouseAnimation.CurrentFrame[0].Foreground = ColorAnsi.BlueBright;
             mouseAnimation.CurrentFrame[0].GlyphIndex = 178;
-
-
             this.mouseCursor = new GameObject();
             this.mouseCursor.Animation = mouseAnimation;
 
@@ -111,20 +111,15 @@ namespace BattleConsole.screens
             player2Console.SpawnEntities();
 
             // clear our messages -- player 1 always goes first
+            this.isPlayer1Active = true;
             messageConsole.ClearMessages();
-            messageConsole.PrintMessage("Player 1's turn");
-
-            // if we only have 1 player, then update the player 2's
-            // panel to read "CPU"
-            if (this.numberOfActivePlayers == 1)
-            {
-                player2HeaderConsole.Clear();
-                player2HeaderConsole.Fill(Color.White, ColorAnsi.Blue, 196, null);
-                player2HeaderConsole.Print(0, 0, " CPU ");
-            }
+            messageConsole.PrintMessage("[Player 1]");
 
             this.isGameOver = false;
             this.isPlayer1Winner = false;
+
+            this.HighlightFleetConsole();
+            
         }
 
         // TODO perform any cleanup tasks for this state
@@ -132,12 +127,37 @@ namespace BattleConsole.screens
         {         
         }
 
+        public void HighlightFleetConsole()
+        {
+            if (this.isPlayer1Active)
+            {
+                player1HeaderConsole.Fill(Color.Black, Color.Yellow, 196, null);
+                player1HeaderConsole.Print(2, 0, " PLAYER 1 ");
+
+                player2HeaderConsole.Fill(Color.White, ColorAnsi.Blue, 196, null);
+                player2HeaderConsole.Print(2, 0, " PLAYER 2 ");
+
+
+            } else
+            {
+                player2HeaderConsole.Fill(Color.Black, Color.Yellow, 196, null);
+                player2HeaderConsole.Print(2, 0, " PLAYER 2 ");
+
+                player1HeaderConsole.Fill(Color.White, ColorAnsi.Blue, 196, null);
+                player1HeaderConsole.Print(2, 0, " PLAYER 1 ");
+            }
+
+        }
+
         public override bool ProcessMouse(MouseInfo info)
         {
 
             bool keyHit = false;
+            bool turnTaken = false;
 
             this.mouseCursor.Position = info.WorldLocation;
+
+
 
             if (info.LeftClicked)
             {
@@ -146,14 +166,17 @@ namespace BattleConsole.screens
                 var testPos = info.WorldLocation;
 
                 // bounds check of mouse in player1 console window
-                if ((5 <= testPos.X && testPos.X <= 28) && (5 <= testPos.Y && testPos.Y <= 16))
+                // only allow clicks from player2 in this container
+                if ((5 <= testPos.X && testPos.X <= 28) && (5 <= testPos.Y && testPos.Y <= 16) && !this.isPlayer1Active)
                 {
                     if (player1Console.CollisionCheckEntities(testPos))
                     {
-                        messageConsole.PrintMessage("Hit!");
+                        //messageConsole.PrintMessage("Hit!");
+                        messageConsole.AppendMessage(" Direct Hit!");
                     } else
                     {
-                        messageConsole.PrintMessage("Miss!");
+                        //messageConsole.PrintMessage("Miss!");
+                        messageConsole.AppendMessage(" Miss!");
                     }
 
                     // now check if any entities are left standing. We only care
@@ -165,19 +188,20 @@ namespace BattleConsole.screens
                         this.isGameOver = true;
                     }
 
-
+                    turnTaken = true;
                 }
 
                 // bounds check of mouse in player2 console window
-                if ((40 <= testPos.X && testPos.X <= 63) && (5 <= testPos.Y && testPos.Y <= 16))
+                // only allow clicks from player1 in this container
+                if ((40 <= testPos.X && testPos.X <= 63) && (5 <= testPos.Y && testPos.Y <= 16) && this.isPlayer1Active)
                 {
                     if (player2Console.CollisionCheckEntities(testPos))
                     {
-                        messageConsole.PrintMessage("Hit!");
+                        messageConsole.AppendMessage(" Direct Hit!");
                     }
                     else
                     {
-                        messageConsole.PrintMessage("Miss!");
+                        messageConsole.AppendMessage(" Miss!");
                     }
 
                     // now check if any entities are left standing. We only care about
@@ -188,6 +212,8 @@ namespace BattleConsole.screens
                         this.isGameOver = true;
                         this.isPlayer1Winner = true;
                     }
+
+                    turnTaken = true;
                 }
 
                 // if our game-over condition is set then display our modal dialog
@@ -207,6 +233,21 @@ namespace BattleConsole.screens
                 }
 
 
+                // if we made it this far without a win/lose condition then switch players
+                if (turnTaken)
+                {
+                    this.isPlayer1Active = !this.isPlayer1Active;
+                    this.HighlightFleetConsole();
+                    if (this.isPlayer1Active)
+                    {
+                        messageConsole.PrintMessage("[Player 1]");
+                    } else
+                    {
+                        messageConsole.PrintMessage("[Player 2]");
+                    }
+                    
+                }
+                
             }
 
             return keyHit || base.ProcessMouse(info);

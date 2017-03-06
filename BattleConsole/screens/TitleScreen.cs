@@ -32,8 +32,8 @@ namespace BattleConsole.screens
             // display a primitive title screen and main menu
             titleConsole.Print(26, 6, "  BattleConsole  v" + Constants.APP_VERSION);
             titleConsole.Print(30, 7, " -=-=-=-=-=-=-= ");
-            titleConsole.Print(30, 8, " [1] 1 player game ");
-            titleConsole.Print(30, 9, " [2] 2 player game ");
+            titleConsole.Print(30, 8, " [1] 1 vs. 1 ");
+            titleConsole.Print(30, 9, " [2] 1 vs. 2 ");
             titleConsole.Print(30, 10, " [Q] Quit ");
             titleConsole.Print(15, 20, " -- copyright (c) 2017 by Wazoo Enterprises Inc. --");
 
