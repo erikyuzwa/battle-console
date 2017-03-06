@@ -21,7 +21,7 @@ namespace BattleConsole.modals
             label1.Print(0, 0, "The Fleet Has Been Sunk!");
 
             okButton = new SadConsole.Controls.Button(9);
-            okButton.Position = new Point(2, 5);
+            okButton.Position = new Point((this.Width / 2) - 4, 5);
             okButton.Text = "Ok";
 
             this.Add(label1);
