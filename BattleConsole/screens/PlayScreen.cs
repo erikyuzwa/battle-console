@@ -195,7 +195,7 @@ namespace BattleConsole.screens
 
                 if (this.isGameOver)
                 {
-                    var popup = new GameOverModal(30, 7);
+                    var popup = new GameOverModal(35, 7);
                     popup.Center();
                     if (this.isPlayer1Winner)
                     {
