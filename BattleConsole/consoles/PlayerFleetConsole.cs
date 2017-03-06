@@ -5,6 +5,7 @@ using SadConsole.Controls;
 using SadConsole.Consoles;
 using SadConsole.Game;
 using SadConsole;
+using System;
 
 namespace BattleConsole.consoles
 {
@@ -14,6 +15,9 @@ namespace BattleConsole.consoles
 
         public PlayerFleetConsole(int width, int height) : base(width, height)
         {
+            // disable keyboard events to this console
+            this.CanUseKeyboard = false;
+
             // draw a border
             SadConsole.Shapes.Box box = SadConsole.Shapes.Box.GetDefaultBox();
             box.Width = width;
@@ -27,7 +31,7 @@ namespace BattleConsole.consoles
             playerAnimation.CurrentFrame[0].Foreground = Color.Orange;
             playerAnimation.CurrentFrame[0].GlyphIndex = '@';
 
-
+   
             this.entities = new GameObject[3];
 
             for (int i = 0; i < 3; i++)
@@ -41,18 +45,28 @@ namespace BattleConsole.consoles
 
         public void SpawnEntities()
         {
-            // add our ship
-            this.entities[0].Position = new Point(13, 3);
-            this.entities[1].Position = new Point(13, 4);
-            this.entities[2].Position = new Point(13, 5);
+            // Maybe there's a better way to spawn a ship entity. This might certainly not be
+            // "ideal" if we want to create a fleet of several ships. 
 
-            
+            Random rnd = new Random();
+            int randX = rnd.Next(3, 20);
+            int randY = rnd.Next(3, 9);
+
+            // right now the "algorithm" pretty much forces ships to spawn vertically - ¯\_(ツ)_/¯
+            this.entities[0].Position = new Point(randX, randY);
+            this.entities[1].Position = new Point(randX, randY+1);
+            this.entities[2].Position = new Point(randX, randY+2);
+
+            // we need to account for the offset of our entity within the world
             this.entities[0].RenderOffset = this.Position - this.TextSurface.RenderArea.Location;
             this.entities[1].RenderOffset = this.Position - this.TextSurface.RenderArea.Location;
             this.entities[2].RenderOffset = this.Position - this.TextSurface.RenderArea.Location;
 
         }
 
+        // just cycle through our GameObject entities and look for any occurrence
+        // of the "ship" Name property. If there are none, then it means the fleet
+        // has been sunk.
         public bool AreAllEntitiesDebris()
         {
             bool result = true;
@@ -78,15 +92,19 @@ namespace BattleConsole.consoles
                 var worldPos =  item.RenderOffset + item.Position;
                 if ((pos.X == worldPos.X) && (pos.Y == worldPos.Y))
                 {
+                    // if we've detected a collision with a section of ship, then
+                    // replace the cell with "debris". Using the Name property will
+                    // help us determine a win condition later.
                     if (item.Name == "ship")
                     {
+                        // set this GameObject's name to debris
                         item.Name = "debris";
 
+                        // create a new AnimatedTextSurface with a debris glyph
                         AnimatedTextSurface debrisAnimation = new AnimatedTextSurface("default", 1, 1, Engine.DefaultFont);
                         debrisAnimation.CreateFrame();
                         debrisAnimation.CurrentFrame[0].Foreground = Color.Yellow;
                         debrisAnimation.CurrentFrame[0].GlyphIndex = '#';
-
                         item.Animation = debrisAnimation;
                 
                         result = true;
@@ -100,12 +118,6 @@ namespace BattleConsole.consoles
             return result;
         }
 
-        public void DrawEntity(Point pos)
-        {
-
-
-        }
-
         public override void Render()
         {
             base.Render();
@@ -113,7 +125,6 @@ namespace BattleConsole.consoles
             {
                 item.Render();
             }
-
 
         }
 

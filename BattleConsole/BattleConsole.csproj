@@ -65,6 +65,7 @@
     <Compile Include="consoles\MessagesConsole.cs" />
     <Compile Include="consoles\PlayerFleetConsole.cs" />
     <Compile Include="consoles\TitleConsole.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="modals\GameOverModal.cs" />
     <Compile Include="modals\GameQuitModal.cs" />
     <Compile Include="Program.cs" />

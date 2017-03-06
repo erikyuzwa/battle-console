@@ -1,11 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using SadConsole.Consoles;
-using System;
 using Console = SadConsole.Consoles.Console;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BattleConsole.consoles;
 using SadConsole.Input;
 using BattleConsole.worlds;
@@ -28,11 +23,14 @@ namespace BattleConsole.screens
 
         public void Begin()
         {
+            // allow this console to receive input events
             SadConsole.Engine.ActiveConsole = this;
 
+            // clear the console
             titleConsole.Clear();
 
-            titleConsole.Print(30, 6, "  BattleConsole  ");
+            // display a primitive title screen and main menu
+            titleConsole.Print(26, 6, "  BattleConsole  v" + Constants.APP_VERSION);
             titleConsole.Print(30, 7, " -=-=-=-=-=-=-= ");
             titleConsole.Print(30, 8, " [1] 1 player game ");
             titleConsole.Print(30, 9, " [2] 2 player game ");
@@ -43,9 +41,15 @@ namespace BattleConsole.screens
 
         }
 
+        // TODO perform any cleanup tasks for this state
+        public void End()
+        {
+        }
+
         public override bool ProcessKeyboard(KeyboardInfo info)
         {
-            if (info.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
+            if (info.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q) || 
+                (info.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape)))
             {
 
                 var popup = new GameQuitModal(30, 7);

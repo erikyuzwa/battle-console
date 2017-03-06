@@ -26,6 +26,10 @@ namespace BattleConsole
 
         private static void Engine_EngineStart(object sender, EventArgs e)
         {
+
+            // TODO set our title bar...somehow?
+            ///SadConsole.Engine.??
+
             // Clear the default console
             SadConsole.Engine.ConsoleRenderStack.Clear();
             SadConsole.Engine.UseKeyboard = true;
@@ -40,7 +44,7 @@ namespace BattleConsole
 
         private static void Engine_EngineUpdated(object sender, EventArgs e)
         {
-
+            // TODO not sure we need anything here
         }
     }
 }

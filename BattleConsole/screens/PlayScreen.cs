@@ -19,6 +19,7 @@ namespace BattleConsole.screens
     class PlayScreen : ConsoleList
     {
         public MessagesConsole messageConsole;
+
         public PlayerFleetConsole player1Console;
         public PlayerFleetConsole player2Console;
         public int numberOfActivePlayers = 1; // either 1 or 2
@@ -62,7 +63,6 @@ namespace BattleConsole.screens
             player2HeaderConsole.Fill(Color.White, ColorAnsi.Blue, 196, null);
             //player2HeaderConsole.SetGlyph(56, 0, 193); // This makes the border match the character console's left-edge border
             player2HeaderConsole.Print(0, 0, " PLAYER 2 ");
-
 
 
             messageConsole = new MessagesConsole(60, 6);
@@ -126,6 +126,7 @@ namespace BattleConsole.screens
            
         }
 
+        // TODO perform any cleanup tasks for this state
         public void End()
         {
             
