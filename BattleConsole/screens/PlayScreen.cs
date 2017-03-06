@@ -42,7 +42,7 @@ namespace BattleConsole.screens
             player1Console.Position = new Point(5, 5);
 
             player2Console = new PlayerFleetConsole(24, 12);
-            player2Console.Position = new Point(50, 5);
+            player2Console.Position = new Point(40, 5);
 
             // Draw the line for the header
             player1HeaderConsole = new Console(24, 1);
@@ -51,33 +51,31 @@ namespace BattleConsole.screens
             player1HeaderConsole.CanUseKeyboard = false;
             player1HeaderConsole.CanUseMouse = false;
             player1HeaderConsole.Fill(Color.White, ColorAnsi.Blue, 196, null);
-            //player1HeaderConsole.SetGlyph(56, 0, 193); // This makes the border match the character console's left-edge border
-            player1HeaderConsole.Print(0, 0, " PLAYER 1 ");
+            player1HeaderConsole.Print(2, 0, " PLAYER 1 ");
 
             // Draw the line for the header
             player2HeaderConsole = new Console(24, 1);
-            player2HeaderConsole.Position = new Point(50, 4);
+            player2HeaderConsole.Position = new Point(40, 4);
             player2HeaderConsole.DoUpdate = false;
             player2HeaderConsole.CanUseKeyboard = false;
             player2HeaderConsole.CanUseMouse = false;
             player2HeaderConsole.Fill(Color.White, ColorAnsi.Blue, 196, null);
-            //player2HeaderConsole.SetGlyph(56, 0, 193); // This makes the border match the character console's left-edge border
-            player2HeaderConsole.Print(0, 0, " PLAYER 2 ");
+            player2HeaderConsole.Print(2, 0, " PLAYER 2 ");
 
 
             messageConsole = new MessagesConsole(60, 6);
-            messageConsole.Position = new Point(5, 20);
+            messageConsole.Position = new Point(5, 19);
 
             // Setup the message header to be as wide as the screen but only 1 character high
+            
             messageHeaderConsole = new Console(60, 1);
-            messageHeaderConsole.Position = new Point(5, 19);
+            messageHeaderConsole.Position = new Point(5, 18);
             messageHeaderConsole.DoUpdate = false;
             messageHeaderConsole.CanUseKeyboard = false;
             messageHeaderConsole.CanUseMouse = false;
 
             // Draw the line for the header
-            messageHeaderConsole.Fill(Color.White, Color.Black, 196, null);
-            messageHeaderConsole.SetGlyph(56, 0, 193); // This makes the border match the character console's left-edge border
+            messageHeaderConsole.Fill(Color.White, ColorAnsi.Blue, 196, null);
             messageHeaderConsole.Print(2, 0, " Messages ");
 
 
@@ -113,8 +111,8 @@ namespace BattleConsole.screens
             player2Console.SpawnEntities();
 
             // clear our messages -- player 1 always goes first
-            messageConsole.Clear();
-            messageConsole.PrintMessage("player 1's turn");
+            messageConsole.ClearMessages();
+            messageConsole.PrintMessage("Player 1's turn");
 
             // if we only have 1 player, then update the player 2's
             // panel to read "CPU"
@@ -171,7 +169,7 @@ namespace BattleConsole.screens
                 }
 
                 // bounds check of mouse in player2 console window
-                if ((50 <= testPos.X && testPos.X <= 73) && (5 <= testPos.Y && testPos.Y <= 16))
+                if ((40 <= testPos.X && testPos.X <= 63) && (5 <= testPos.Y && testPos.Y <= 16))
                 {
                     if (player2Console.CollisionCheckEntities(testPos))
                     {
